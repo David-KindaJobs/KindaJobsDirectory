@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // A pro's identity. Created/updated ONLY by Cloud Functions (Admin SDK bypasses rules).
+    // Owner can read their own doc; nobody can self-grant admin or change their own status from the client.
+    match /accounts/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Binds a Directory listing (by immutable slug) to its owner uid. Written ONLY by the resolveClaims
+    // function, so a client can never forge ownership of someone else's listing. Owner reads their own claims.
+    match /listingClaims/{slug} {
+      allow read: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+      allow write: if false;
+    }
+
+    // Everything else denied by default. (Phases 2-4 add their own rule blocks here.)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

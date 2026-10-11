@@ -1,0 +1,13 @@
+{
+  "name": "kindajobs-directory-functions",
+  "description": "KindaJobs Directory — Cloud Functions (Phase 1: accounts + token bridge)",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.1.0"
+  }
+}

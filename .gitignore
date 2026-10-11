@@ -1,0 +1,7 @@
+node_modules/
+functions/node_modules/
+serviceAccountKey*.json
+*.log
+.firebase/
+.runtimeconfig.json
+.DS_Store
